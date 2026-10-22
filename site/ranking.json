@@ -1,0 +1,793 @@
+{
+  "rows": [
+    {
+      "id": "stanford",
+      "name": "斯坦福大学",
+      "en": "Stanford University",
+      "country": "美国",
+      "code": "US",
+      "short": "SU",
+      "url": "https://www.stanford.edu",
+      "kind": "university",
+      "wikidata": "Q41506",
+      "pagerank": 0.09927701839712388,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0893493165574115,
+      "alumni": 1,
+      "staff": 2,
+      "weighted_incoming": 1.0,
+      "rank": 1
+    },
+    {
+      "id": "berkeley",
+      "name": "加州大学伯克利分校",
+      "en": "University of California, Berkeley",
+      "country": "美国",
+      "code": "US",
+      "short": "CAL",
+      "url": "https://www.berkeley.edu",
+      "kind": "university",
+      "wikidata": "Q168756",
+      "pagerank": 0.0957864445766168,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.08620780011895511,
+      "alumni": 2,
+      "staff": 1,
+      "weighted_incoming": 2.0,
+      "rank": 2
+    },
+    {
+      "id": "edinburgh",
+      "name": "爱丁堡大学",
+      "en": "University of Edinburgh",
+      "country": "英国",
+      "code": "GB",
+      "short": "ED",
+      "url": "https://www.ed.ac.uk",
+      "kind": "university",
+      "wikidata": "Q160302",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.4347826086956522,
+      "industry_score": 0,
+      "score": 0.06910876864335583,
+      "alumni": 0,
+      "staff": 0,
+      "weighted_incoming": 0.0,
+      "rank": 3
+    },
+    {
+      "id": "princeton",
+      "name": "普林斯顿大学",
+      "en": "Princeton University",
+      "country": "美国",
+      "code": "US",
+      "short": "PU",
+      "url": "https://www.princeton.edu",
+      "kind": "university",
+      "wikidata": "Q21578",
+      "pagerank": 0.050289413826629256,
+      "award_score": 0.17857142857142858,
+      "industry_score": 0,
+      "score": 0.0631176153011092,
+      "alumni": 2,
+      "staff": 1,
+      "weighted_incoming": 1.15,
+      "rank": 4
+    },
+    {
+      "id": "caltech",
+      "name": "加州理工学院",
+      "en": "California Institute of Technology",
+      "country": "美国",
+      "code": "US",
+      "short": "CIT",
+      "url": "https://www.caltech.edu",
+      "kind": "university",
+      "wikidata": "Q161562",
+      "pagerank": 0.0661504248447353,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.05953538236026177,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 1.25,
+      "rank": 5
+    },
+    {
+      "id": "harvard",
+      "name": "哈佛大学",
+      "en": "Harvard University",
+      "country": "美国",
+      "code": "US",
+      "short": "HU",
+      "url": "https://www.harvard.edu",
+      "kind": "university",
+      "wikidata": "Q13371",
+      "pagerank": 0.04058163730850004,
+      "award_score": 0.125,
+      "industry_score": 0,
+      "score": 0.04902347357765004,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 1.0,
+      "rank": 6
+    },
+    {
+      "id": "uiuc",
+      "name": "伊利诺伊大学厄巴纳香槟分校",
+      "en": "University of Illinois Urbana-Champaign",
+      "country": "美国",
+      "code": "US",
+      "short": "ILL",
+      "url": "https://illinois.edu",
+      "kind": "university",
+      "wikidata": "Q457281",
+      "pagerank": 0.04058163730850004,
+      "award_score": 0.125,
+      "industry_score": 0,
+      "score": 0.04902347357765004,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 1.0,
+      "rank": 7
+    },
+    {
+      "id": "eth",
+      "name": "苏黎世联邦理工学院",
+      "en": "ETH Zürich",
+      "country": "瑞士",
+      "code": "CH",
+      "short": "ETH",
+      "url": "https://ethz.ch",
+      "kind": "university",
+      "wikidata": "Q11942",
+      "pagerank": 0.05268493264612163,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.04741643938150947,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 1.0,
+      "rank": 8
+    },
+    {
+      "id": "cornell",
+      "name": "康奈尔大学",
+      "en": "Cornell University",
+      "country": "美国",
+      "code": "US",
+      "short": "CU",
+      "url": "https://www.cornell.edu",
+      "kind": "university",
+      "wikidata": "Q49115",
+      "pagerank": 0.04788622650032228,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.04309760385029005,
+      "alumni": 2,
+      "staff": 0,
+      "weighted_incoming": 1.4,
+      "rank": 9
+    },
+    {
+      "id": "flinders",
+      "name": "弗林德斯大学",
+      "en": "Flinders University",
+      "country": "澳大利亚",
+      "code": "AU",
+      "short": "FL",
+      "url": "https://www.flinders.edu.au",
+      "kind": "university",
+      "wikidata": "Q1536791",
+      "pagerank": 0.03539451073523364,
+      "award_score": 0.07142857142857142,
+      "industry_score": 0,
+      "score": 0.03899791680456743,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 0.4,
+      "rank": 10
+    },
+    {
+      "id": "columbia",
+      "name": "哥伦比亚大学",
+      "en": "Columbia University",
+      "country": "美国",
+      "code": "US",
+      "short": "CU",
+      "url": "https://www.columbia.edu",
+      "kind": "university",
+      "wikidata": "Q49088",
+      "pagerank": 0.0423411166347669,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.03810700497129021,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 1.0,
+      "rank": 11
+    },
+    {
+      "id": "mit",
+      "name": "麻省理工学院",
+      "en": "Massachusetts Institute of Technology",
+      "country": "美国",
+      "code": "US",
+      "short": "MIT",
+      "url": "https://www.mit.edu",
+      "kind": "university",
+      "wikidata": "Q49108",
+      "pagerank": 0.041588323991647747,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.037429491592482975,
+      "alumni": 2,
+      "staff": 2,
+      "weighted_incoming": 0.4,
+      "rank": 12
+    },
+    {
+      "id": "oxford",
+      "name": "牛津大学",
+      "en": "University of Oxford",
+      "country": "英国",
+      "code": "GB",
+      "short": "OX",
+      "url": "https://www.ox.ac.uk",
+      "kind": "university",
+      "wikidata": "Q34433",
+      "pagerank": 0.03909814343481526,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.03518832909133374,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 0.15,
+      "rank": 13
+    },
+    {
+      "id": "cambridge",
+      "name": "剑桥大学",
+      "en": "University of Cambridge",
+      "country": "英国",
+      "code": "GB",
+      "short": "CAM",
+      "url": "https://www.cam.ac.uk",
+      "kind": "university",
+      "wikidata": "Q35794",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.06521739130434782,
+      "industry_score": 0,
+      "score": 0.032152246904225384,
+      "alumni": 0,
+      "staff": 0,
+      "weighted_incoming": 0.0,
+      "rank": 14
+    },
+    {
+      "id": "cmu",
+      "name": "卡内基梅隆大学",
+      "en": "Carnegie Mellon University",
+      "country": "美国",
+      "code": "US",
+      "short": "CMU",
+      "url": "https://www.cmu.edu",
+      "kind": "university",
+      "wikidata": "Q132796",
+      "pagerank": 0.032998991915741266,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.02969909272416714,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 0.15,
+      "rank": 15
+    },
+    {
+      "id": "iowa",
+      "name": "爱荷华大学",
+      "en": "University of Iowa",
+      "country": "美国",
+      "code": "US",
+      "short": "IOWA",
+      "url": "https://uiowa.edu",
+      "kind": "university",
+      "wikidata": "Q182973",
+      "pagerank": 0.03055775817046171,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.02750198235341554,
+      "alumni": 1,
+      "staff": 0,
+      "weighted_incoming": 0.15,
+      "rank": 16
+    },
+    {
+      "id": "asu",
+      "name": "亚利桑那州立大学",
+      "en": "Arizona State University",
+      "country": "美国",
+      "code": "US",
+      "short": "ASU",
+      "url": "https://www.asu.edu",
+      "kind": "university",
+      "wikidata": "Q670897",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 0,
+      "weighted_incoming": 0.0,
+      "rank": 17
+    },
+    {
+      "id": "epfl",
+      "name": "洛桑联邦理工学院",
+      "en": "École polytechnique fédérale de Lausanne",
+      "country": "瑞士",
+      "code": "CH",
+      "short": "EPFL",
+      "url": "https://www.epfl.ch",
+      "kind": "university",
+      "wikidata": "Q262760",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 1,
+      "weighted_incoming": 0.0,
+      "rank": 18
+    },
+    {
+      "id": "hebrew",
+      "name": "耶路撒冷希伯来大学",
+      "en": "Hebrew University of Jerusalem",
+      "country": "以色列",
+      "code": "IL",
+      "short": "HUJI",
+      "url": "https://en.huji.ac.il",
+      "kind": "university",
+      "wikidata": "Q174570",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 0,
+      "weighted_incoming": 0.0,
+      "rank": 19
+    },
+    {
+      "id": "lsu",
+      "name": "路易斯安那州立大学",
+      "en": "Louisiana State University",
+      "country": "美国",
+      "code": "US",
+      "short": "LSU",
+      "url": "https://www.lsu.edu",
+      "kind": "university",
+      "wikidata": "Q716177",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 0,
+      "weighted_incoming": 0.0,
+      "rank": 20
+    },
+    {
+      "id": "toronto",
+      "name": "多伦多大学",
+      "en": "University of Toronto",
+      "country": "加拿大",
+      "code": "CA",
+      "short": "UT",
+      "url": "https://www.utoronto.ca",
+      "kind": "university",
+      "wikidata": "Q180865",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 0,
+      "weighted_incoming": 0.0,
+      "rank": 21
+    },
+    {
+      "id": "tsinghua",
+      "name": "清华大学",
+      "en": "Tsinghua University",
+      "country": "中国",
+      "code": "CN",
+      "short": "THU",
+      "url": "https://www.tsinghua.edu.cn",
+      "kind": "university",
+      "wikidata": "Q169959",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 1,
+      "weighted_incoming": 0.0,
+      "rank": 22
+    },
+    {
+      "id": "ucla",
+      "name": "加州大学洛杉矶分校",
+      "en": "University of California, Los Angeles",
+      "country": "美国",
+      "code": "US",
+      "short": "LA",
+      "url": "https://www.ucla.edu",
+      "kind": "university",
+      "wikidata": "Q181644",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 1,
+      "weighted_incoming": 0.0,
+      "rank": 23
+    },
+    {
+      "id": "ucsd",
+      "name": "加州大学圣迭戈分校",
+      "en": "University of California, San Diego",
+      "country": "美国",
+      "code": "US",
+      "short": "SD",
+      "url": "https://ucsd.edu",
+      "kind": "university",
+      "wikidata": "Q622664",
+      "pagerank": 0.028478341970878444,
+      "award_score": 0.0,
+      "industry_score": 0,
+      "score": 0.0256305077737906,
+      "alumni": 0,
+      "staff": 0,
+      "weighted_incoming": 0.0,
+      "rank": 24
+    }
+  ],
+  "edges": [
+    {
+      "from": "berkeley",
+      "to": "oxford",
+      "weight": 0.15,
+      "evidence": [
+        {
+          "person": "stuart-russell",
+          "level": "bachelor",
+          "weight": 0.15,
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/russell.html"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "berkeley",
+      "to": "stanford",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "stuart-russell",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/russell.html"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "epfl",
+      "to": "eth",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "martin-odersky",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://people.epfl.ch/martin.odersky?lang=en"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "mit",
+      "to": "columbia",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "regina-barzilay",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://imes.mit.edu/people/barzilay-regina"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "mit",
+      "to": "cornell",
+      "weight": 1.4,
+      "evidence": [
+        {
+          "person": "daniela-rus",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://cap.csail.mit.edu/daniela-rus-roboticist-csail-lab-director",
+            "https://www.csail.mit.edu/person/daniela-rus"
+          ]
+        },
+        {
+          "person": "regina-barzilay",
+          "level": "postdoc",
+          "weight": 0.4,
+          "sources": [
+            "https://imes.mit.edu/people/barzilay-regina"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "mit",
+      "to": "iowa",
+      "weight": 0.15,
+      "evidence": [
+        {
+          "person": "daniela-rus",
+          "level": "bachelor",
+          "weight": 0.15,
+          "sources": [
+            "https://cap.csail.mit.edu/daniela-rus-roboticist-csail-lab-director",
+            "https://www.csail.mit.edu/person/daniela-rus"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "princeton",
+      "to": "berkeley",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "sanjeev-arora",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://engineering.princeton.edu/faculty/sanjeev-arora",
+            "https://profsanjeevarora.github.io/bio.html"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "princeton",
+      "to": "mit",
+      "weight": 0.15,
+      "evidence": [
+        {
+          "person": "sanjeev-arora",
+          "level": "bachelor",
+          "weight": 0.15,
+          "sources": [
+            "https://engineering.princeton.edu/faculty/sanjeev-arora",
+            "https://profsanjeevarora.github.io/bio.html"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "stanford",
+      "to": "berkeley",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "andrew-ng",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://rail.eecs.berkeley.edu/deeprlcourse-fa17/docs/ng-thesis.pdf",
+            "https://symsys.stanford.edu/people/andrew-ng"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "stanford",
+      "to": "caltech",
+      "weight": 1.25,
+      "evidence": [
+        {
+          "person": "fei-fei-li",
+          "level": "master",
+          "weight": 0.25,
+          "sources": [
+            "https://profiles.stanford.edu/fei-fei-li",
+            "https://www.alumni.caltech.edu/fei-fei-li/"
+          ]
+        },
+        {
+          "person": "fei-fei-li",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://profiles.stanford.edu/fei-fei-li",
+            "https://www.alumni.caltech.edu/fei-fei-li/"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "stanford",
+      "to": "cmu",
+      "weight": 0.15,
+      "evidence": [
+        {
+          "person": "andrew-ng",
+          "level": "bachelor",
+          "weight": 0.15,
+          "sources": [
+            "https://rail.eecs.berkeley.edu/deeprlcourse-fa17/docs/ng-thesis.pdf",
+            "https://symsys.stanford.edu/people/andrew-ng"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "stanford",
+      "to": "mit",
+      "weight": 0.25,
+      "evidence": [
+        {
+          "person": "andrew-ng",
+          "level": "master",
+          "weight": 0.25,
+          "sources": [
+            "https://rail.eecs.berkeley.edu/deeprlcourse-fa17/docs/ng-thesis.pdf",
+            "https://symsys.stanford.edu/people/andrew-ng"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "stanford",
+      "to": "princeton",
+      "weight": 0.15,
+      "evidence": [
+        {
+          "person": "fei-fei-li",
+          "level": "bachelor",
+          "weight": 0.15,
+          "sources": [
+            "https://profiles.stanford.edu/fei-fei-li",
+            "https://www.alumni.caltech.edu/fei-fei-li/"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "tsinghua",
+      "to": "harvard",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "andrew-yao",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://iiis.tsinghua.edu.cn/en/People/Faculty/yaoqizhi.htm"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "tsinghua",
+      "to": "uiuc",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "andrew-yao",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://iiis.tsinghua.edu.cn/en/People/Faculty/yaoqizhi.htm"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "ucla",
+      "to": "flinders",
+      "weight": 0.4,
+      "evidence": [
+        {
+          "person": "terence-tao",
+          "level": "bachelor",
+          "weight": 0.15,
+          "sources": [
+            "https://www.math.ucla.edu/~tao/cv.html"
+          ]
+        },
+        {
+          "person": "terence-tao",
+          "level": "master",
+          "weight": 0.25,
+          "sources": [
+            "https://www.math.ucla.edu/~tao/cv.html"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "ucla",
+      "to": "princeton",
+      "weight": 1.0,
+      "evidence": [
+        {
+          "person": "terence-tao",
+          "level": "phd",
+          "weight": 1.0,
+          "sources": [
+            "https://www.math.ucla.edu/~tao/cv.html"
+          ]
+        }
+      ]
+    }
+  ],
+  "config": {
+    "weights": {
+      "bachelor": 0.15,
+      "master": 0.25,
+      "phd": 1.0,
+      "postdoc": 0.4
+    },
+    "roles": [
+      "faculty",
+      "adjunct",
+      "researcher",
+      "postdoc"
+    ],
+    "damping": 0.85,
+    "award_mix": 0.1,
+    "industry_mix": 0.05,
+    "self_hire": false,
+    "max_age_days": 730,
+    "awards": {
+      "fields": 1,
+      "abel": 1,
+      "wolf_math": 0.8,
+      "nobel": 1,
+      "turing": 1,
+      "ieee_honor": 0.6,
+      "ieee_edison": 0.4,
+      "ieee_milestone": 0.2
+    },
+    "companies": [
+      "google-deepmind",
+      "google",
+      "microsoft",
+      "nvidia",
+      "apple",
+      "meta",
+      "openai"
+    ]
+  },
+  "iterations": 29,
+  "residual": 5.089678678515952e-13,
+  "as_of": "2026-10-23",
+  "method_version": "0.1.0"
+}

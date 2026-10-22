@@ -1,0 +1,11 @@
+{
+  "name": "college-rank",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m collegerank serve",
+    "build": "python3 -m collegerank export",
+    "test": "python3 -m unittest discover -s tests -v && node --test tests/*.test.mjs"
+  }
+}

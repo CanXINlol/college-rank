@@ -1,0 +1,9 @@
+{
+  "weights": {"bachelor": 0.15, "master": 0.25, "phd": 1.0, "postdoc": 0.4},
+  "damping": 0.85,
+  "award_mix": 0.1,
+  "industry_mix": 0.05,
+  "roles": ["faculty", "adjunct", "researcher", "postdoc"],
+  "self_hire": false,
+  "companies": ["google-deepmind", "google", "microsoft", "nvidia", "apple", "meta", "openai"]
+}

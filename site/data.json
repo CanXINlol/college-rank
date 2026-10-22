@@ -1,0 +1,768 @@
+{
+  "version": "0.1.0",
+  "as_of": "2026-10-23",
+  "coverage": "curated-pilot",
+  "note": "人工核验的小型方法验证数据集，主要覆盖计算机与数学；不代表全球大学真实名次。学位年份缺失时不推断。",
+  "institutions": [
+    {
+      "id": "stanford",
+      "name": "斯坦福大学",
+      "en": "Stanford University",
+      "country": "美国",
+      "code": "US",
+      "short": "SU",
+      "url": "https://www.stanford.edu",
+      "kind": "university",
+      "wikidata": "Q41506"
+    },
+    {
+      "id": "berkeley",
+      "name": "加州大学伯克利分校",
+      "en": "University of California, Berkeley",
+      "country": "美国",
+      "code": "US",
+      "short": "CAL",
+      "url": "https://www.berkeley.edu",
+      "kind": "university",
+      "wikidata": "Q168756"
+    },
+    {
+      "id": "mit",
+      "name": "麻省理工学院",
+      "en": "Massachusetts Institute of Technology",
+      "country": "美国",
+      "code": "US",
+      "short": "MIT",
+      "url": "https://www.mit.edu",
+      "kind": "university",
+      "wikidata": "Q49108"
+    },
+    {
+      "id": "princeton",
+      "name": "普林斯顿大学",
+      "en": "Princeton University",
+      "country": "美国",
+      "code": "US",
+      "short": "PU",
+      "url": "https://www.princeton.edu",
+      "kind": "university",
+      "wikidata": "Q21578"
+    },
+    {
+      "id": "caltech",
+      "name": "加州理工学院",
+      "en": "California Institute of Technology",
+      "country": "美国",
+      "code": "US",
+      "short": "CIT",
+      "url": "https://www.caltech.edu",
+      "kind": "university",
+      "wikidata": "Q161562"
+    },
+    {
+      "id": "toronto",
+      "name": "多伦多大学",
+      "en": "University of Toronto",
+      "country": "加拿大",
+      "code": "CA",
+      "short": "UT",
+      "url": "https://www.utoronto.ca",
+      "kind": "university",
+      "wikidata": "Q180865"
+    },
+    {
+      "id": "edinburgh",
+      "name": "爱丁堡大学",
+      "en": "University of Edinburgh",
+      "country": "英国",
+      "code": "GB",
+      "short": "ED",
+      "url": "https://www.ed.ac.uk",
+      "kind": "university",
+      "wikidata": "Q160302"
+    },
+    {
+      "id": "cambridge",
+      "name": "剑桥大学",
+      "en": "University of Cambridge",
+      "country": "英国",
+      "code": "GB",
+      "short": "CAM",
+      "url": "https://www.cam.ac.uk",
+      "kind": "university",
+      "wikidata": "Q35794"
+    },
+    {
+      "id": "ucla",
+      "name": "加州大学洛杉矶分校",
+      "en": "University of California, Los Angeles",
+      "country": "美国",
+      "code": "US",
+      "short": "LA",
+      "url": "https://www.ucla.edu",
+      "kind": "university",
+      "wikidata": "Q181644"
+    },
+    {
+      "id": "flinders",
+      "name": "弗林德斯大学",
+      "en": "Flinders University",
+      "country": "澳大利亚",
+      "code": "AU",
+      "short": "FL",
+      "url": "https://www.flinders.edu.au",
+      "kind": "university",
+      "wikidata": "Q1536791"
+    },
+    {
+      "id": "cmu",
+      "name": "卡内基梅隆大学",
+      "en": "Carnegie Mellon University",
+      "country": "美国",
+      "code": "US",
+      "short": "CMU",
+      "url": "https://www.cmu.edu",
+      "kind": "university",
+      "wikidata": "Q132796"
+    },
+    {
+      "id": "ucsd",
+      "name": "加州大学圣迭戈分校",
+      "en": "University of California, San Diego",
+      "country": "美国",
+      "code": "US",
+      "short": "SD",
+      "url": "https://ucsd.edu",
+      "kind": "university",
+      "wikidata": "Q622664"
+    },
+    {
+      "id": "asu",
+      "name": "亚利桑那州立大学",
+      "en": "Arizona State University",
+      "country": "美国",
+      "code": "US",
+      "short": "ASU",
+      "url": "https://www.asu.edu",
+      "kind": "university",
+      "wikidata": "Q670897"
+    },
+    {
+      "id": "lsu",
+      "name": "路易斯安那州立大学",
+      "en": "Louisiana State University",
+      "country": "美国",
+      "code": "US",
+      "short": "LSU",
+      "url": "https://www.lsu.edu",
+      "kind": "university",
+      "wikidata": "Q716177"
+    },
+    {
+      "id": "cornell",
+      "name": "康奈尔大学",
+      "en": "Cornell University",
+      "country": "美国",
+      "code": "US",
+      "short": "CU",
+      "url": "https://www.cornell.edu",
+      "kind": "university",
+      "wikidata": "Q49115"
+    },
+    {
+      "id": "iowa",
+      "name": "爱荷华大学",
+      "en": "University of Iowa",
+      "country": "美国",
+      "code": "US",
+      "short": "IOWA",
+      "url": "https://uiowa.edu",
+      "kind": "university",
+      "wikidata": "Q182973"
+    },
+    {
+      "id": "columbia",
+      "name": "哥伦比亚大学",
+      "en": "Columbia University",
+      "country": "美国",
+      "code": "US",
+      "short": "CU",
+      "url": "https://www.columbia.edu",
+      "kind": "university",
+      "wikidata": "Q49088"
+    },
+    {
+      "id": "tsinghua",
+      "name": "清华大学",
+      "en": "Tsinghua University",
+      "country": "中国",
+      "code": "CN",
+      "short": "THU",
+      "url": "https://www.tsinghua.edu.cn",
+      "kind": "university",
+      "wikidata": "Q169959"
+    },
+    {
+      "id": "harvard",
+      "name": "哈佛大学",
+      "en": "Harvard University",
+      "country": "美国",
+      "code": "US",
+      "short": "HU",
+      "url": "https://www.harvard.edu",
+      "kind": "university",
+      "wikidata": "Q13371"
+    },
+    {
+      "id": "uiuc",
+      "name": "伊利诺伊大学厄巴纳香槟分校",
+      "en": "University of Illinois Urbana-Champaign",
+      "country": "美国",
+      "code": "US",
+      "short": "ILL",
+      "url": "https://illinois.edu",
+      "kind": "university",
+      "wikidata": "Q457281"
+    },
+    {
+      "id": "epfl",
+      "name": "洛桑联邦理工学院",
+      "en": "École polytechnique fédérale de Lausanne",
+      "country": "瑞士",
+      "code": "CH",
+      "short": "EPFL",
+      "url": "https://www.epfl.ch",
+      "kind": "university",
+      "wikidata": "Q262760"
+    },
+    {
+      "id": "eth",
+      "name": "苏黎世联邦理工学院",
+      "en": "ETH Zürich",
+      "country": "瑞士",
+      "code": "CH",
+      "short": "ETH",
+      "url": "https://ethz.ch",
+      "kind": "university",
+      "wikidata": "Q11942"
+    },
+    {
+      "id": "oxford",
+      "name": "牛津大学",
+      "en": "University of Oxford",
+      "country": "英国",
+      "code": "GB",
+      "short": "OX",
+      "url": "https://www.ox.ac.uk",
+      "kind": "university",
+      "wikidata": "Q34433"
+    },
+    {
+      "id": "hebrew",
+      "name": "耶路撒冷希伯来大学",
+      "en": "Hebrew University of Jerusalem",
+      "country": "以色列",
+      "code": "IL",
+      "short": "HUJI",
+      "url": "https://en.huji.ac.il",
+      "kind": "university",
+      "wikidata": "Q174570"
+    },
+    {
+      "id": "insitro",
+      "name": "insitro",
+      "en": "insitro",
+      "country": "美国",
+      "code": "US",
+      "short": "INS",
+      "url": "https://www.insitro.com",
+      "kind": "company",
+      "wikidata": null
+    }
+  ],
+  "people": [
+    {
+      "id": "fei-fei-li",
+      "name": "Fei-Fei Li · 李飞飞",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "princeton",
+          "level": "bachelor",
+          "sources": [
+            "https://profiles.stanford.edu/fei-fei-li",
+            "https://www.alumni.caltech.edu/fei-fei-li/"
+          ]
+        },
+        {
+          "institution": "caltech",
+          "level": "master",
+          "sources": [
+            "https://profiles.stanford.edu/fei-fei-li",
+            "https://www.alumni.caltech.edu/fei-fei-li/"
+          ]
+        },
+        {
+          "institution": "caltech",
+          "level": "phd",
+          "sources": [
+            "https://profiles.stanford.edu/fei-fei-li",
+            "https://www.alumni.caltech.edu/fei-fei-li/"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "stanford",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://profiles.stanford.edu/fei-fei-li",
+            "https://www.alumni.caltech.edu/fei-fei-li/"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "geoffrey-hinton",
+      "name": "Geoffrey Hinton",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "cambridge",
+          "level": "bachelor",
+          "sources": [
+            "https://www.cs.toronto.edu/~hinton/shortcv.pdf"
+          ]
+        },
+        {
+          "institution": "edinburgh",
+          "level": "phd",
+          "sources": [
+            "https://www.cs.toronto.edu/~hinton/shortcv.pdf"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "toronto",
+          "role": "emeritus",
+          "current": true,
+          "sources": [
+            "https://www.cs.toronto.edu/~hinton/shortcv.pdf"
+          ]
+        }
+      ],
+      "awards": [
+        {
+          "type": "turing",
+          "year": 2018,
+          "sources": [
+            "https://awards.acm.org/about/2018-turing"
+          ]
+        },
+        {
+          "type": "nobel",
+          "year": 2024,
+          "sources": [
+            "https://www.nobelprize.org/prizes/physics/2024/hinton/facts/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "terence-tao",
+      "name": "Terence Tao · 陶哲轩",
+      "field": "数学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "flinders",
+          "level": "bachelor",
+          "sources": [
+            "https://www.math.ucla.edu/~tao/cv.html"
+          ]
+        },
+        {
+          "institution": "flinders",
+          "level": "master",
+          "sources": [
+            "https://www.math.ucla.edu/~tao/cv.html"
+          ]
+        },
+        {
+          "institution": "princeton",
+          "level": "phd",
+          "sources": [
+            "https://www.math.ucla.edu/~tao/cv.html"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "ucla",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://www.math.ucla.edu/~tao/cv.html"
+          ]
+        }
+      ],
+      "awards": [
+        {
+          "type": "fields",
+          "year": 2006,
+          "sources": [
+            "https://www.mathunion.org/imu-awards/fields-medal/fields-medals-2006"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "andrew-ng",
+      "name": "Andrew Ng · 吴恩达",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "cmu",
+          "level": "bachelor",
+          "sources": [
+            "https://symsys.stanford.edu/people/andrew-ng",
+            "https://rail.eecs.berkeley.edu/deeprlcourse-fa17/docs/ng-thesis.pdf"
+          ]
+        },
+        {
+          "institution": "mit",
+          "level": "master",
+          "sources": [
+            "https://symsys.stanford.edu/people/andrew-ng",
+            "https://rail.eecs.berkeley.edu/deeprlcourse-fa17/docs/ng-thesis.pdf"
+          ]
+        },
+        {
+          "institution": "berkeley",
+          "level": "phd",
+          "sources": [
+            "https://symsys.stanford.edu/people/andrew-ng",
+            "https://rail.eecs.berkeley.edu/deeprlcourse-fa17/docs/ng-thesis.pdf"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "stanford",
+          "role": "adjunct",
+          "current": true,
+          "sources": [
+            "https://symsys.stanford.edu/people/andrew-ng",
+            "https://rail.eecs.berkeley.edu/deeprlcourse-fa17/docs/ng-thesis.pdf"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "michael-jordan",
+      "name": "Michael I. Jordan",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "lsu",
+          "level": "bachelor",
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/jordan.html"
+          ]
+        },
+        {
+          "institution": "asu",
+          "level": "master",
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/jordan.html"
+          ]
+        },
+        {
+          "institution": "ucsd",
+          "level": "phd",
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/jordan.html"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "berkeley",
+          "role": "emeritus",
+          "current": true,
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/jordan.html"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "sanjeev-arora",
+      "name": "Sanjeev Arora",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "mit",
+          "level": "bachelor",
+          "sources": [
+            "https://profsanjeevarora.github.io/bio.html",
+            "https://engineering.princeton.edu/faculty/sanjeev-arora"
+          ]
+        },
+        {
+          "institution": "berkeley",
+          "level": "phd",
+          "sources": [
+            "https://profsanjeevarora.github.io/bio.html",
+            "https://engineering.princeton.edu/faculty/sanjeev-arora"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "princeton",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://profsanjeevarora.github.io/bio.html",
+            "https://engineering.princeton.edu/faculty/sanjeev-arora"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "daniela-rus",
+      "name": "Daniela Rus",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "iowa",
+          "level": "bachelor",
+          "sources": [
+            "https://www.csail.mit.edu/person/daniela-rus",
+            "https://cap.csail.mit.edu/daniela-rus-roboticist-csail-lab-director"
+          ]
+        },
+        {
+          "institution": "cornell",
+          "level": "phd",
+          "sources": [
+            "https://www.csail.mit.edu/person/daniela-rus",
+            "https://cap.csail.mit.edu/daniela-rus-roboticist-csail-lab-director"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "mit",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://www.csail.mit.edu/person/daniela-rus",
+            "https://cap.csail.mit.edu/daniela-rus-roboticist-csail-lab-director"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "regina-barzilay",
+      "name": "Regina Barzilay",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "columbia",
+          "level": "phd",
+          "sources": [
+            "https://imes.mit.edu/people/barzilay-regina"
+          ]
+        },
+        {
+          "institution": "cornell",
+          "level": "postdoc",
+          "sources": [
+            "https://imes.mit.edu/people/barzilay-regina"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "mit",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://imes.mit.edu/people/barzilay-regina"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "andrew-yao",
+      "name": "Andrew Yao · 姚期智",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "harvard",
+          "level": "phd",
+          "sources": [
+            "https://iiis.tsinghua.edu.cn/en/People/Faculty/yaoqizhi.htm"
+          ]
+        },
+        {
+          "institution": "uiuc",
+          "level": "phd",
+          "sources": [
+            "https://iiis.tsinghua.edu.cn/en/People/Faculty/yaoqizhi.htm"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "tsinghua",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://iiis.tsinghua.edu.cn/en/People/Faculty/yaoqizhi.htm"
+          ]
+        }
+      ],
+      "awards": [
+        {
+          "type": "turing",
+          "year": 2000,
+          "sources": [
+            "https://aiig.tsinghua.edu.cn/en/info/1013/1091.htm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "martin-odersky",
+      "name": "Martin Odersky",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "eth",
+          "level": "phd",
+          "sources": [
+            "https://people.epfl.ch/martin.odersky?lang=en"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "epfl",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://people.epfl.ch/martin.odersky?lang=en"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "stuart-russell",
+      "name": "Stuart Russell",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "oxford",
+          "level": "bachelor",
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/russell.html"
+          ]
+        },
+        {
+          "institution": "stanford",
+          "level": "phd",
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/russell.html"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "berkeley",
+          "role": "faculty",
+          "current": true,
+          "sources": [
+            "https://www2.eecs.berkeley.edu/Faculty/Homepages/russell.html"
+          ]
+        }
+      ],
+      "awards": []
+    },
+    {
+      "id": "daphne-koller",
+      "name": "Daphne Koller",
+      "field": "计算机科学",
+      "status": "reviewed",
+      "checked_at": "2026-10-22",
+      "education": [
+        {
+          "institution": "hebrew",
+          "level": "bachelor",
+          "sources": [
+            "https://med.stanford.edu/minorconsult/daphne-koller.html"
+          ]
+        },
+        {
+          "institution": "hebrew",
+          "level": "master",
+          "sources": [
+            "https://med.stanford.edu/minorconsult/daphne-koller.html"
+          ]
+        },
+        {
+          "institution": "stanford",
+          "level": "phd",
+          "sources": [
+            "https://med.stanford.edu/minorconsult/daphne-koller.html"
+          ]
+        }
+      ],
+      "appointments": [
+        {
+          "institution": "insitro",
+          "role": "industry",
+          "current": true,
+          "sources": [
+            "https://med.stanford.edu/minorconsult/daphne-koller.html"
+          ]
+        }
+      ],
+      "awards": []
+    }
+  ],
+  "milestones": [],
+  "snapshot_sha256": "dedff2262906225cf80350168f081aa0d208300f5296a67fb77ea5fa9721b1dc"
+}

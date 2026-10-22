@@ -1,0 +1,4 @@
+{
+  "description": "Wikidata employer IDs. Extend to universities, institutes, and companies. This pilot is not a worldwide census.",
+  "institutions": ["Q41506", "Q168756", "Q49108", "Q21578", "Q169959", "Q11942", "Q180865", "Q262760"]
+}

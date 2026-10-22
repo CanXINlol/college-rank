@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="CollegeRank 开源学术人才流动排行榜：用可追溯履历与加权 PageRank 探索大学的学术影响力。">
+  <meta name="theme-color" content="#152b2a"><title>CollegeRank · 学术影响力的另一种答案</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside class="sidebar">
+  <a href="#ranking" class="brand"><span class="brand-icon">c<span>r</span></span><span>CollegeRank<small>FOLLOW THE TALENT.</small></span></a>
+  <div class="workspace-label">学术影响力观察站 <span>BETA</span></div>
+  <nav aria-label="主导航">
+    <a href="#ranking" data-page="ranking"><span class="nav-icon">▤</span>全球大学榜单 <span class="nav-arrow">↗</span></a>
+    <a href="#network" data-page="network"><span class="nav-icon">⌘</span>学术人才网络</a>
+    <a href="#people" data-page="people"><span class="nav-icon">♧</span>人才履历库</a>
+    <a href="#method" data-page="method"><span class="nav-icon">◈</span>数据与方法</a>
+  </nav>
+  <div class="side-note"><span class="tiny-label">THE IDEA</span><p>一所大学的影响力，<br>藏在它培养的人才<br>去向里。</p><div class="note-line"></div><small>From academic mobility<br>to institutional influence.</small></div>
+  <div class="sidebar-bottom"><span class="online-dot"></span> 开放数据 · 可复现算法<a href="#method">项目说明 ↗</a><small>CollegeRank © 2026 · v0.1</small></div>
+</aside>
+<div class="app-shell">
+  <header class="topbar"><span>探索 <span class="breadcrumb">/</span> <b id="crumb">全球大学榜单</b></span><div class="topbar-right"><span class="dataset-tag">PILOT DATASET</span><a href="data.json" target="_blank" rel="noopener">开放数据 <span>↗</span></a></div></header>
+  <main id="content" tabindex="-1"><div class="loading">正在加载可追溯的学术网络…</div></main>
+  <footer><span>CollegeRank · 人才流动，让学术影响力可见。</span><a href="#method">方法透明，结论由你判断 ↗</a></footer>
+</div>
+<dialog id="weights-dialog" aria-labelledby="weight-title"></dialog>
+<dialog id="detail-dialog" aria-labelledby="detail-title"></dialog>
+<div id="toast" role="status"></div>
+<script type="module" src="app.js"></script>
+</body></html>
