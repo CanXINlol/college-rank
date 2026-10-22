@@ -10,10 +10,11 @@ export function calculate(data, options={}) {
   if (![...Object.values(cfg.weights),...Object.values(cfg.awards)].every(v=>Number.isFinite(v)&&v>=0)) throw Error('权重必须为非负有限数');
   if (!(cfg.damping>0&&cfg.damping<1)||![cfg.award_mix,cfg.industry_mix].every(v=>Number.isFinite(v)&&v>=0&&v<=1)||cfg.award_mix+cfg.industry_mix>1) throw Error('无效的排名参数');
   const schools=data.institutions.filter(i=>i.kind!=='company'), ids=schools.map(i=>i.id).sort(), n=ids.length, valid=new Set(ids);
-  const edgeMap=new Map(), award={}, industry={}, grads={}, staff={};
+  const edgeMap=new Map(), award={}, industry={}, grads={}, staff={}, profiles={};
   const add=(obj,key,v)=>obj[key]=(obj[key]||0)+v;
   for (const p of data.people) {
     if(p.status!=='reviewed'||(Date.parse(data.as_of)-Date.parse(p.checked_at))/86400000>cfg.max_age_days) continue;
+    for(const item of [...p.education,...p.appointments]) if(valid.has(item.institution)) (profiles[item.institution]??=new Set()).add(p.id);
     const edu=[...new Map(p.education.filter(e=>valid.has(e.institution)&&e.level in cfg.weights&&!e.honorary).map(e=>[e.institution+'|'+e.level,e])).values()];
     const jobs=[...new Map(p.appointments.filter(a=>a.current===true&&cfg.roles.includes(a.role)&&valid.has(a.institution)).map(a=>[a.institution,a])).values()];
     for(const a of jobs) (staff[a.institution]??=new Set()).add(p.id);
@@ -46,8 +47,8 @@ export function calculate(data, options={}) {
   }
   const sum=o=>Object.values(o).reduce((a,b)=>a+b,0), at=sum(award),it=sum(industry), am=at?cfg.award_mix:0,im=it?cfg.industry_mix:0;
   const rows=schools.map(s=>({...s,pagerank:scores[s.id],award_score:at?(award[s.id]||0)/at:0,industry_score:it?(industry[s.id]||0)/it:0,
-    alumni:grads[s.id]?.size||0,staff:staff[s.id]?.size||0,weighted_incoming:incoming[s.id]||0}));
+    alumni:grads[s.id]?.size||0,staff:staff[s.id]?.size||0,weighted_incoming:incoming[s.id]||0,profile_count:profiles[s.id]?.size||0,evidence_status:profiles[s.id]?.size?'profiles_available':'catalog_only'}));
   rows.forEach(r=>r.score=(1-am-im)*r.pagerank+am*r.award_score+im*r.industry_score);
-  rows.sort((a,b)=>b.score-a.score||(a.id<b.id?-1:1));rows.forEach((r,i)=>r.rank=i+1);
+  rows.sort((a,b)=>b.score-a.score||(a.id<b.id?-1:1));let previous=null,rank=0;rows.forEach((r,i)=>{if(previous===null||Math.abs(r.score-previous)>1e-12){rank=i+1;previous=r.score;}r.rank=rank;});
   return {rows,edges,config:cfg,iterations,residual,as_of:data.as_of,method_version:'0.1.0'};
 }

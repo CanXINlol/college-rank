@@ -32,10 +32,14 @@ def calculate(data, options=None):
     industry = defaultdict(float)
     graduates = defaultdict(set)
     staff = defaultdict(set)
+    profiles = defaultdict(set)
     now = date.fromisoformat(data["as_of"])
     for p in data["people"]:
         if p["status"] != "reviewed" or (now - date.fromisoformat(p["checked_at"])).days > cfg["max_age_days"]:
             continue
+        for item in p["education"] + p["appointments"]:
+            if item["institution"] in academic:
+                profiles[item["institution"]].add(p["id"])
         # One person contributes once per institution/level, including multiple degrees of same type.
         edu = {(e["institution"], e["level"]): e for e in p["education"]
                if e["institution"] in academic and e["level"] in cfg["weights"] and not e.get("honorary")}
@@ -104,10 +108,16 @@ def calculate(data, options=None):
     rows = [{**academic[i], "pagerank": score[i], "award_score": awards[i], "industry_score": companies[i],
              "score": (1-am-im)*score[i]+am*awards[i]+im*companies[i],
              "alumni": len(graduates[i]), "staff": len(staff[i]),
-             "weighted_incoming": incoming[i]} for i in ids]
+             "weighted_incoming": incoming[i], "profile_count": len(profiles[i]),
+             "evidence_status": "profiles_available" if profiles[i] else "catalog_only"} for i in ids]
     rows.sort(key=lambda r: (-r["score"], r["id"]))
+    previous = None
+    rank = 0
     for pos, row in enumerate(rows, 1):
-        row["rank"] = pos
+        if previous is None or abs(row["score"] - previous) > 1e-12:
+            rank = pos
+            previous = row["score"]
+        row["rank"] = rank
     return {"rows": rows, "edges": [{"from": u, "to": v, "weight": w, "evidence": evidence[u,v]}
                                      for (u,v),w in sorted(edges.items())],
             "config": cfg, "iterations": iteration, "residual": residual,

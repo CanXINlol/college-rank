@@ -3,39 +3,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-institutions = []
-
-
-def school(id, name, en, country, code, short, url, kind="university", qid=None):
-    institutions.append(dict(id=id, name=name, en=en, country=country, code=code, short=short,
-                             url=url, kind=kind, wikidata=qid))
-
-
-school("stanford", "斯坦福大学", "Stanford University", "美国", "US", "SU", "https://www.stanford.edu", qid="Q41506")
-school("berkeley", "加州大学伯克利分校", "University of California, Berkeley", "美国", "US", "CAL", "https://www.berkeley.edu", qid="Q168756")
-school("mit", "麻省理工学院", "Massachusetts Institute of Technology", "美国", "US", "MIT", "https://www.mit.edu", qid="Q49108")
-school("princeton", "普林斯顿大学", "Princeton University", "美国", "US", "PU", "https://www.princeton.edu", qid="Q21578")
-school("caltech", "加州理工学院", "California Institute of Technology", "美国", "US", "CIT", "https://www.caltech.edu", qid="Q161562")
-school("toronto", "多伦多大学", "University of Toronto", "加拿大", "CA", "UT", "https://www.utoronto.ca", qid="Q180865")
-school("edinburgh", "爱丁堡大学", "University of Edinburgh", "英国", "GB", "ED", "https://www.ed.ac.uk", qid="Q160302")
-school("cambridge", "剑桥大学", "University of Cambridge", "英国", "GB", "CAM", "https://www.cam.ac.uk", qid="Q35794")
-school("ucla", "加州大学洛杉矶分校", "University of California, Los Angeles", "美国", "US", "LA", "https://www.ucla.edu", qid="Q181644")
-school("flinders", "弗林德斯大学", "Flinders University", "澳大利亚", "AU", "FL", "https://www.flinders.edu.au", qid="Q1536791")
-school("cmu", "卡内基梅隆大学", "Carnegie Mellon University", "美国", "US", "CMU", "https://www.cmu.edu", qid="Q132796")
-school("ucsd", "加州大学圣迭戈分校", "University of California, San Diego", "美国", "US", "SD", "https://ucsd.edu", qid="Q622664")
-school("asu", "亚利桑那州立大学", "Arizona State University", "美国", "US", "ASU", "https://www.asu.edu", qid="Q670897")
-school("lsu", "路易斯安那州立大学", "Louisiana State University", "美国", "US", "LSU", "https://www.lsu.edu", qid="Q716177")
-school("cornell", "康奈尔大学", "Cornell University", "美国", "US", "CU", "https://www.cornell.edu", qid="Q49115")
-school("iowa", "爱荷华大学", "University of Iowa", "美国", "US", "IOWA", "https://uiowa.edu", qid="Q182973")
-school("columbia", "哥伦比亚大学", "Columbia University", "美国", "US", "CU", "https://www.columbia.edu", qid="Q49088")
-school("tsinghua", "清华大学", "Tsinghua University", "中国", "CN", "THU", "https://www.tsinghua.edu.cn", qid="Q169959")
-school("harvard", "哈佛大学", "Harvard University", "美国", "US", "HU", "https://www.harvard.edu", qid="Q13371")
-school("uiuc", "伊利诺伊大学厄巴纳香槟分校", "University of Illinois Urbana-Champaign", "美国", "US", "ILL", "https://illinois.edu", qid="Q457281")
-school("epfl", "洛桑联邦理工学院", "École polytechnique fédérale de Lausanne", "瑞士", "CH", "EPFL", "https://www.epfl.ch", qid="Q262760")
-school("eth", "苏黎世联邦理工学院", "ETH Zürich", "瑞士", "CH", "ETH", "https://ethz.ch", qid="Q11942")
-school("oxford", "牛津大学", "University of Oxford", "英国", "GB", "OX", "https://www.ox.ac.uk", qid="Q34433")
-school("hebrew", "耶路撒冷希伯来大学", "Hebrew University of Jerusalem", "以色列", "IL", "HUJI", "https://en.huji.ac.il", qid="Q174570")
-school("insitro", "insitro", "insitro", "美国", "US", "INS", "https://www.insitro.com", "company")
+# Institution identities are independently checked against the ROR registry.
+institutions = json.loads((ROOT / "data/institutions.json").read_text())
+institutions.append(dict(id="insitro",name="insitro",en="insitro",country="美国",code="US",
+                         short="INS",url="https://www.insitro.com",kind="company",wikidata=None))
 people = []
 
 
@@ -75,8 +46,8 @@ person("stuart-russell", "Stuart Russell", "计算机科学", [("oxford","bachel
 person("daphne-koller", "Daphne Koller", "计算机科学", [("hebrew","bachelor"),("hebrew","master"),("stanford","phd")], "insitro", "industry",
        "https://med.stanford.edu/minorconsult/daphne-koller.html")
 
-data = dict(version="0.1.0", as_of="2026-10-22", coverage="curated-pilot",
-            note="人工核验的小型方法验证数据集，主要覆盖计算机与数学；不代表全球大学真实名次。学位年份缺失时不推断。",
+data = dict(version="0.1.0", as_of="2026-10-23", coverage="curated-pilot",
+            note="已收录 100 所经 ROR 匹配的大学与 12 位已核验人才。新增 76 所目前仅有机构信息，尚待补充人才履历；基础 PageRank 与并列名次不代表真实学术影响力。学位年份缺失时不推断。",
             institutions=institutions, people=people, milestones=[])
 (ROOT / "data").mkdir(exist_ok=True)
 (ROOT / "data/curated.json").write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n")

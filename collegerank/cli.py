@@ -34,7 +34,7 @@ def export(source, dest, config=None):
 
 def to_csv(result):
     out = io.StringIO()
-    fields = ["rank","id","name","country","score","pagerank","award_score","industry_score","alumni","staff"]
+    fields = ["rank","id","name","country","score","pagerank","award_score","industry_score","alumni","staff","profile_count","evidence_status"]
     writer = csv.DictWriter(out,fieldnames=fields,extrasaction="ignore")
     writer.writeheader()
     writer.writerows(result["rows"])

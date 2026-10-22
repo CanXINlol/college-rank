@@ -4,7 +4,7 @@
 
 如果 X 培养的博士在 Y 获得教职，记录 **Y → X** 的认可关系，再用稀疏加权 PageRank 计算培养机构的网络影响力。本科、硕士、博士和博士后经历可分别设置权重，奖项与当前企业校友作为独立信号。
 
-> **当前是可运行的研究 MVP，不是已经爬完全球的权威排名。** 首发包含 12 位有官方来源的真实人才、24 所学术机构、1 家企业，覆盖 7 个国家或地区。计算机与数学样本明显偏多。网页中的全部名次只用于验证方法。
+> **当前是可运行的研究 MVP，不是已经爬完全球的权威排名。** 当前包含 12 位有官方来源的真实人才、100 所经 ROR 官方注册库匹配的大学、1 家企业，覆盖 24 个国家或地区。人才履历仍是 12 位，涉及原有 24 所大学；新增 76 所仅有机构信息，尚待补充履历。计算机与数学样本明显偏多。网页中的全部名次只用于验证方法。
 
 ## 本地启动
 
@@ -17,6 +17,8 @@ python3 -m collegerank serve
 打开 <http://127.0.0.1:8000>。默认仅本机可访问。更换端口：`python3 -m collegerank serve --port 8080`。
 
 也支持 `npm run dev`；Node 18+ 用于浏览器算法测试，网站本身是原生 HTML/CSS/ES modules，无前端依赖。
+
+下图为最初的 24 所界面截图；当前版本已扩展至 100 所，提供履历状态和每页数量筛选。
 
 ![CollegeRank 界面](docs/screenshot.png)
 
@@ -69,9 +71,17 @@ Y 是聘用机构，X 是培养机构；不是把边反过来奖励聘用学校�
 
 原始 PageRank 参考 [Brin & Page (1998)](https://research.google/pubs/the-anatomy-of-a-large-scale-hypertextual-web-search-engine/)。本项目是加权扩展，且额外指标并非原算法的一部分。单向人才流动不能证明一所学校在所有维度更好。
 
+## 100 所大学的机构目录
+
+`data/institutions.json` 是固定的 100 所大学清单，均经 [ROR 开放注册库](https://ror.org/) 的官网域名或名称匹配，保留官网、ROR ID、ROR 规范名称、Wikidata ID、机构信息来源和核对日期。名单为人工选择的全球机构集合，不是引用某个外部“世界前 100”排名。
+
+榜单支持每页 10 / 25 / 50 / 100 所、履历状态筛选，CSV 包含 `profile_count` 和 `evidence_status`。没有人才数据的学校标注“待补充履历 · 仅机构信息”；它们仍是图节点，但其基础 PageRank 不构成真实影响力证据。分数差小于 `1e-12` 视为并列，使用竞赛名次，不依照 ID 人为分出优劣。
+
+机构目录与人才数据分别维护。`scripts/create_seed.py` 读取该目录重建首批人才数据，不会把清单重置为 24 所。此次匹配同时纠正了原有若干 Wikidata ID；采集起点使用 ROR 返回的规范 ID。
+
 ## 自动采集
 
-编辑 `config/sources.json` 中的 Wikidata 机构 ID，可加入大学、研究院和研究机构。默认只选 8 所机构作为采集起点。
+编辑 `config/sources.json` 中的 Wikidata 机构 ID，可加入大学、研究院和研究机构。默认包含目录内 100 所大学的 Wikidata ID 作为采集起点；采集耗时随机构数量增加，可用 `--seeds` 指定更小批次。
 
 ```bash
 python3 -m collegerank crawl --limit 25
@@ -134,7 +144,8 @@ git push -u origin main
 ```text
 collegerank/      Python 排名、校验、SQLite 快照、采集 CLI
 site/            无依赖前端，原生 JS 排名、图、详情与引用
-data/curated.json 已核验人才数据
+data/curated.json 已核验人才数据与 100 所大学节点
+data/institutions.json ROR 核对过的大学主目录
 config/          数据源与权重配置
 tests/           数学边界、采集保护、Python/JS 结果一致性
 scripts/         首批数据重建工具

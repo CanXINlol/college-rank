@@ -14,6 +14,7 @@ for(const [index,config] of configs.entries())test(`Python/browser parity, confi
   const js=calculate(data,config);
   assert.deepEqual(js.rows.map(r=>r.id),python.rows.map(r=>r.id));
   assert.deepEqual(js.edges,python.edges);
-  for(let i=0;i<js.rows.length;i++) for(const k of ['score','pagerank','award_score','industry_score','alumni','staff'])
+  assert.deepEqual(js.rows.map(r=>r.evidence_status),python.rows.map(r=>r.evidence_status));
+  for(let i=0;i<js.rows.length;i++) for(const k of ['score','pagerank','award_score','industry_score','alumni','staff','profile_count','rank'])
     assert.ok(Math.abs(js.rows[i][k]-python.rows[i][k])<1e-10,`${js.rows[i].id} ${k}`);
 });

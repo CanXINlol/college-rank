@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.DS_Store
+data/cache/
+data/college-rank.sqlite*
+data/candidates.json
+data/crawl-state.json
+data/crawl-report.json
+site/data.json
+site/ranking.json
+site/ranking.csv
+coverage/
