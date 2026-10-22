@@ -1,43 +1,72 @@
-name: Collect academic mobility candidates
+name: Collect and publish evidence-supported Top 100
 on:
   schedule:
     - cron: '30 2 * * 1'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
 concurrency:
-  group: crawl
+  group: pages
   cancel-in-progress: false
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - uses: actions/cache/restore@v4
         with:
-          path: |
-            data/crawl-state.json
-            data/candidates.json
-          key: crawl-${{ github.run_id }}
-          restore-keys: crawl-
-      - run: python3 -m collegerank crawl --limit 25
+          path: data/harvest/raw
+          key: academic-corpus-${{ github.run_id }}
+          restore-keys: academic-corpus-
+      - name: Collect complete rosters and all person fact batches
+        run: python3 -m collegerank crawl
+      - name: Verify data and both ranking implementations
+        run: |
+          python3 -m unittest discover -s tests -v
+          node --test tests/*.test.mjs
+          python3 -m collegerank validate
       - uses: actions/cache/save@v4
         if: always()
         with:
-          path: |
-            data/crawl-state.json
-            data/candidates.json
-          key: crawl-${{ github.run_id }}
+          path: data/harvest/raw
+          key: academic-corpus-${{ github.run_id }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: academic-candidates-${{ github.run_id }}
+          name: collection-audit-${{ github.run_id }}
           path: |
-            data/candidates.json
-            data/crawl-report.json
-            data/crawl-state.json
-          retention-days: 30
+            data/harvest/collection-report.json
+            data/harvest/coverage.json
+          retention-days: 90
+      - name: Save successfully validated corpus
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/collected.json.gz data/harvest/collection-report.json data/harvest/coverage.json data/harvest/taxonomy.json data/harvest/entity-labels.json data/harvest/person-batches.json data/harvest/official-company-report.json data/harvest/summary.json data/harvest/top100.csv
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh collected academic corpus and coverage audit'
+            git push
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: collect
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish updated evidence-supported ranking
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -12,3 +12,11 @@ site/data.json
 site/ranking.json
 site/ranking.csv
 coverage/
+data/harvest/raw/
+data/harvest/rosters.json
+data/harvest/facts.jsonl.gz*
+site/*.json.gz
+site/coverage.json
+site/profiles/
+site/corpus.json.gz
+site/top100.csv

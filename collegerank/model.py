@@ -12,6 +12,7 @@ def validate(data):
     ids = [i["id"] for i in data["institutions"]]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate institution ID")
+    ids = set(ids)
     seen = set()
     for institution in data["institutions"]:
         if institution["kind"] not in {"university", "institute", "company"}:
@@ -20,8 +21,8 @@ def validate(data):
         if p["id"] in seen:
             raise ValueError(f"Duplicate person ID: {p['id']}")
         seen.add(p["id"])
-        if p.get("status") not in {"reviewed", "candidate"}:
-            raise ValueError("Person needs reviewed/candidate status")
+        if p.get("status") not in {"reviewed", "source_verified", "candidate"}:
+            raise ValueError("Person needs reviewed/source_verified/candidate status")
         if date.fromisoformat(p["checked_at"]) > as_of:
             raise ValueError("Review date cannot be after the snapshot date")
         for group in ("education", "appointments", "awards"):

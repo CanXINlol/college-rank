@@ -5,5 +5,7 @@
   "industry_mix": 0.05,
   "roles": ["faculty", "adjunct", "researcher", "postdoc"],
   "self_hire": false,
+  "award_reference_events": 100,
+  "industry_reference_people": 1000,
   "companies": ["google-deepmind", "google", "microsoft", "nvidia", "apple", "meta", "openai"]
 }

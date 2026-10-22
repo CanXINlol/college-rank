@@ -1,0 +1,32 @@
+[
+  {
+    "name":"Jensen Huang",
+    "company":"nvidia",
+    "url":"https://nvidianews.nvidia.com/bios/jensen-huang",
+    "current_role_pattern":"(?i)has served since.{0,70}chief executive officer",
+    "education":[
+      {"institution_name":"Oregon State University","level":"bachelor","pattern":"(?i)BSEE.{0,30}Oregon State"},
+      {"institution_name":"Stanford University","level":"master","pattern":"(?i)MSEE.{0,30}Stanford"}
+    ]
+  },
+  {
+    "name":"Satya Nadella",
+    "company":"microsoft",
+    "url":"https://news.microsoft.com/source/exec/satya-nadella/",
+    "current_role_pattern":"(?i)Nadella is.{0,80}Chief Executive Officer of Microsoft",
+    "education":[
+      {"institution_name":"Mangalore University","level":"bachelor","pattern":"(?i)bachelor.{0,90}Mangalore"},
+      {"institution_name":"University of Wisconsin–Milwaukee","level":"master","pattern":"(?i)master.{0,100}Wisconsin.{0,8}Milwaukee"},
+      {"institution_name":"University of Chicago","level":"master","pattern":"(?i)master.{0,100}University of Chicago"}
+    ]
+  },
+  {
+    "name":"John Ternus",
+    "company":"apple",
+    "url":"https://www.apple.com/leadership/john-ternus/",
+    "current_role_pattern":"(?i)John Ternus is the CEO of Apple",
+    "education":[
+      {"institution_name":"University of Pennsylvania","level":"bachelor","pattern":"(?i)bachelor.{0,100}University of Pennsylvania"}
+    ]
+  }
+]

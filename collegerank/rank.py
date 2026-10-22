@@ -8,6 +8,8 @@ DEFAULT = {
     "roles": ["faculty", "adjunct", "researcher", "postdoc"],
     "damping": .85, "award_mix": .1, "industry_mix": .05,
     "self_hire": False, "max_age_days": 730,
+    "appointment_scope": "observed",
+    "award_reference_events": 100, "industry_reference_people": 1000,
     "awards": {"fields": 1, "abel": 1, "wolf_math": .8, "nobel": 1,
                "turing": 1, "ieee_honor": .6, "ieee_edison": .4, "ieee_milestone": .2},
     "companies": ["google-deepmind", "google", "microsoft", "nvidia", "apple", "meta", "openai"],
@@ -18,6 +20,12 @@ def calculate(data, options=None):
     cfg = {**DEFAULT, **(options or {})}
     cfg["weights"] = {**DEFAULT["weights"], **(options or {}).get("weights", {})}
     cfg["awards"] = {**DEFAULT["awards"], **(options or {}).get("awards", {})}
+    cfg["require_evidence"] = (options or {}).get("require_evidence", data.get("coverage") == "collected-wikidata")
+    if cfg["appointment_scope"] not in {"observed", "current"}:
+        raise ValueError("appointment_scope must be observed or current")
+    for key in ("award_reference_events","industry_reference_people"):
+        if not isinstance(cfg[key],(int,float)) or not isfinite(cfg[key]) or cfg[key]<=0:
+            raise ValueError(f"{key} must be positive")
     for v in list(cfg["weights"].values()) + list(cfg["awards"].values()):
         if not isinstance(v, (int, float)) or not isfinite(v) or v < 0:
             raise ValueError("Weights must be finite and nonnegative")
@@ -33,9 +41,11 @@ def calculate(data, options=None):
     graduates = defaultdict(set)
     staff = defaultdict(set)
     profiles = defaultdict(set)
+    award_events=0
+    current_company_people=0
     now = date.fromisoformat(data["as_of"])
     for p in data["people"]:
-        if p["status"] != "reviewed" or (now - date.fromisoformat(p["checked_at"])).days > cfg["max_age_days"]:
+        if p["status"] not in {"reviewed", "source_verified"} or (now - date.fromisoformat(p["checked_at"])).days > cfg["max_age_days"]:
             continue
         for item in p["education"] + p["appointments"]:
             if item["institution"] in academic:
@@ -43,7 +53,8 @@ def calculate(data, options=None):
         # One person contributes once per institution/level, including multiple degrees of same type.
         edu = {(e["institution"], e["level"]): e for e in p["education"]
                if e["institution"] in academic and e["level"] in cfg["weights"] and not e.get("honorary")}
-        jobs = {a["institution"]: a for a in p["appointments"] if a.get("current") is True
+        jobs = {a["institution"]: a for a in p["appointments"] if (a.get("current") is True or
+                cfg["appointment_scope"] == "observed" and a.get("observed") is True)
                 and a["role"] in cfg["roles"] and a["institution"] in academic}
         for institution in jobs:
             staff[institution].add(p["id"])
@@ -67,8 +78,10 @@ def calculate(data, options=None):
                 if a["type"] != "ieee_milestone":
                     event_scores[(a["type"], a.get("year"))] = cfg["awards"].get(a["type"], 0)
             wins = sum(event_scores.values())
+            award_events += sum(v>0 for v in event_scores.values())
             in_company = any(a.get("current") is True and a["role"] == "industry"
                              and a["institution"] in cfg["companies"] for a in p["appointments"])
+            current_company_people += int(in_company)
             for (school, level) in edu:
                 share = cfg["weights"][level] / total_edu
                 award[school] += wins * share
@@ -77,6 +90,12 @@ def calculate(data, options=None):
     for m in data.get("milestones", []):
         if m.get("status") == "reviewed" and m.get("sources") and m["institution"] in academic:
             award[m["institution"]] += cfg["awards"]["ieee_milestone"]
+            award_events += int(cfg["awards"]["ieee_milestone"]>0)
+    if cfg["require_evidence"]:
+        supported = {i for (u,v),w in edges.items() if w > 0 for i in (u,v)}
+        supported.update(i for i,v in award.items() if v > 0)
+        supported.update(i for i,v in industry.items() if v > 0)
+        academic = {i:school for i,school in academic.items() if i in supported}
     ids = sorted(academic)
     n = len(ids)
     if not n:
@@ -103,8 +122,8 @@ def calculate(data, options=None):
         return {i: values.get(i, 0) / total if total else 0 for i in ids}
     awards, companies = normalized(award), normalized(industry)
     # Empty bonus channels revert to graph weight, rather than losing probability mass.
-    am = cfg["award_mix"] if sum(award.values()) else 0
-    im = cfg["industry_mix"] if sum(industry.values()) else 0
+    am = cfg["award_mix"]*min(1,award_events/cfg["award_reference_events"]) if sum(award.values()) else 0
+    im = cfg["industry_mix"]*min(1,current_company_people/cfg["industry_reference_people"]) if sum(industry.values()) else 0
     rows = [{**academic[i], "pagerank": score[i], "award_score": awards[i], "industry_score": companies[i],
              "score": (1-am-im)*score[i]+am*awards[i]+im*companies[i],
              "alumni": len(graduates[i]), "staff": len(staff[i]),
@@ -121,4 +140,6 @@ def calculate(data, options=None):
     return {"rows": rows, "edges": [{"from": u, "to": v, "weight": w, "evidence": evidence[u,v]}
                                      for (u,v),w in sorted(edges.items())],
             "config": cfg, "iterations": iteration, "residual": residual,
-            "as_of": data["as_of"], "method_version": "0.1.0"}
+            "effective_mix":{"network":1-am-im,"awards":am,"industry":im},
+            "signal_counts":{"award_events":award_events,"current_company_people":current_company_people},
+            "as_of": data["as_of"], "method_version": "0.2.0"}

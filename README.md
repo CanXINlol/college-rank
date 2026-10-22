@@ -1,156 +1,132 @@
 # CollegeRank
 
-**追随人才，发现影响力。** 一个以学术人才流动为基础、可引用、可复现的大学与研究机构排名实验。
+以**实际采集的学历与教研任职陈述**构建认可网络：X 培养的人在 Y 获得教研职位，产生 **Y → X** 的边，再用稀疏加权 PageRank 计算培养影响力，展示全球 Top 100。
 
-如果 X 培养的博士在 Y 获得教职，记录 **Y → X** 的认可关系，再用稀疏加权 PageRank 计算培养机构的网络影响力。本科、硕士、博士和博士后经历可分别设置权重，奖项与当前企业校友作为独立信号。
+本版本已从 100 所配置大学与 7 家科技企业的 Wikidata 任职队列发现 **258,245 个去重人物 ID**，并完成 **1,034 / 1,034** 个人物事实批次，采集错误为 **0**。已发布 **239,326** 份履历，其中 **236,984** 份有教研职业分类；计算得到 **7,171** 个有证据机构、**55,036** 条有效关系。实际 Top 100 可见 [CSV](data/harvest/top100.csv)。更多发布人数、有效关系及排除数量见 [覆盖报告](data/harvest/coverage.json)。
 
-> **当前是可运行的研究 MVP，不是已经爬完全球的权威排名。** 当前包含 12 位有官方来源的真实人才、100 所经 ROR 官方注册库匹配的大学、1 家企业，覆盖 24 个国家或地区。人才履历仍是 12 位，涉及原有 24 所大学；新增 76 所仅有机构信息，尚待补充履历。计算机与数学样本明显偏多。网页中的全部名次只用于验证方法。
+**边界必须明确：这是公开结构化数据的完整队列采集，不是全球所有机构官网当前 faculty 的全量人口普查。默认使用有记录的教研任职，包括历史任职。没有结束日期不等于当前在职。**
 
-## 本地启动
+## 使用已经采集的数据
 
-需要 Python 3.11+；运行网站及采集器 **不需要安装第三方 Python 包，也不需要 API Key**。
+Python 3.11+，无需第三方 Python 包或 API Key；采集过程需要系统 `curl`。Node 18+ 仅用于算法一致性测试。
 
 ```bash
 python3 -m collegerank serve
 ```
 
-打开 <http://127.0.0.1:8000>。默认仅本机可访问。更换端口：`python3 -m collegerank serve --port 8080`。
+打开 <http://127.0.0.1:8000>。程序优先读取已采集的 `data/collected.json.gz`，不再以 12 人试验集作为默认榜单输入。网站包含：
 
-也支持 `npm run dev`；Node 18+ 用于浏览器算法测试，网站本身是原生 HTML/CSS/ES modules，无前端依赖。
+- 有证据机构的 Top 100；支持全部机构、地区、学科、任职范围、搜索与 CSV 导出。
+- 任职机构 → 培养机构的网络、机构贡献证据、完整人物履历与逐项引用。
+- 本科、硕士、博士、博士后经历的权重调整，阻尼、奖项与企业校友配置。
+- 大规模人才库分页；完整引用按人物分片压缩加载，不一次性创建数十万个页面元素。
+- 完整输入、排名、覆盖报告与原始采集缓存的审计路径。
 
-下图为最初的 24 所界面截图；当前版本已扩展至 100 所，提供履历状态和每页数量筛选。
-
-![CollegeRank 界面](docs/screenshot.png)
-
-## 已实现
-
-- 响应式中文排行榜、大学中英文检索、国家筛选、学科重算、分页、CSV 导出。
-- 学校详情：学位来源、当前任职、入边/出边、贡献权重、人才与奖项原始链接。
-- SVG 人才流动网络、可搜索人才履历库、完整方法与覆盖说明。
-- 可调培养权重、阻尼、荣休/兼职/自聘、奖项强度、企业范围及加分混合比例；参数 JSON 导出。
-- Python / 浏览器 JavaScript 两套稀疏 PageRank，同一数据与参数下交叉验证。
-- Wikidata 公共结构化数据采集：机构配置、稳定排序分页、断点续跑、缓存、限速、重试、原始记录与引用保存。
-- 候选与核验数据隔离，SQLite 内容哈希快照，数据校验。
-- GitHub Actions 测试、每周采集候选数据工件、GitHub Pages 静态部署。
-
-## 排名规则
-
-```text
-A[Y,X] = Σ(person, education) weight(education) / 当前有效任职机构数
-P[Y,X] = A[Y,X] / Σk A[Y,k]
-r = (1-d)/N + d Pᵀr              d = 0.85
-```
-
-Y 是聘用机构，X 是培养机构；不是把边反过来奖励聘用学校。
-
-| 培养经历 | 默认权重 |
-| --- | ---: |
-| 本科 | 0.15 |
-| 硕士 | 0.25 |
-| 博士 | 1.00 |
-| 博士后研究经历 | 0.40 |
-
-博士后不是学位，但可以作为独立培养经历。一人同一机构同一层级只计一次；联合任职按有效机构均分；未知学位、荣誉学位、未确认在职、候选记录、核验超过 730 天的数据不进入人才流动图。默认不计自聘和荣休任职，可调整。
-
-悬挂节点的质量均匀分发，L1 残差小于 `1e-12` 停止，最多 1000 次迭代。单轮复杂度 O(N+E)，存储邻接边，不分配 N×N 稠密矩阵。
-
-```text
-最终份额 = (1 - α - β) × PageRank
-         + α × normalized(奖项贡献)
-         + β × normalized(当前企业校友贡献)
-α = 0.10，β = 0.05
-```
-
-归一化份额合计 1（界面显示百分比）；空的加分通道份额回归 PageRank。奖项按类型与年份去重，并按教育权重分配到培养机构。企业贡献每人只计一次，按教育权重分配。
-
-**数学三大奖**暂定义为菲尔兹奖、阿贝尔奖、沃尔夫数学奖，且支持诺贝尔奖、图灵奖、IEEE Medal of Honor 和 IEEE Edison Medal。IEEE Milestone 是技术成就/地点表彰，使用独立 `milestones` 机构事件，不能当作个人获奖。当前尚无 Milestone 数据。请参见 [IEEE 官方说明](https://history.ieee.org/ieee-milestones-program/)。
-
-企业名单与权重是可修改假设，不存在无需解释的“客观顶尖公司”。仅有来源支持的**当前任职**才计分，过去任职、董事、顾问不算。初始数据的 insitro 默认不在企业加分名单内，因此默认企业加分为零。在设置中添加 `insitro` 可以验证该通道。所有附加项都可以设置为零，恢复纯人才流动排名。
-
-地区筛选只改变展示，保留全图名次；学科筛选会先筛人才，再重算全图。当前不提供“毕业生获教职概率”，因为缺少完整毕业生人数分母。
-
-原始 PageRank 参考 [Brin & Page (1998)](https://research.google/pubs/the-anatomy-of-a-large-scale-hypertextual-web-search-engine/)。本项目是加权扩展，且额外指标并非原算法的一部分。单向人才流动不能证明一所学校在所有维度更好。
-
-## 100 所大学的机构目录
-
-`data/institutions.json` 是固定的 100 所大学清单，均经 [ROR 开放注册库](https://ror.org/) 的官网域名或名称匹配，保留官网、ROR ID、ROR 规范名称、Wikidata ID、机构信息来源和核对日期。名单为人工选择的全球机构集合，不是引用某个外部“世界前 100”排名。
-
-榜单支持每页 10 / 25 / 50 / 100 所、履历状态筛选，CSV 包含 `profile_count` 和 `evidence_status`。没有人才数据的学校标注“待补充履历 · 仅机构信息”；它们仍是图节点，但其基础 PageRank 不构成真实影响力证据。分数差小于 `1e-12` 视为并列，使用竞赛名次，不依照 ID 人为分出优劣。
-
-机构目录与人才数据分别维护。`scripts/create_seed.py` 读取该目录重建首批人才数据，不会把清单重置为 24 所。此次匹配同时纠正了原有若干 Wikidata ID；采集起点使用 ROR 返回的规范 ID。
-
-## 自动采集
-
-编辑 `config/sources.json` 中的 Wikidata 机构 ID，可加入大学、研究院和研究机构。默认包含目录内 100 所大学的 Wikidata ID 作为采集起点；采集耗时随机构数量增加，可用 `--seeds` 指定更小批次。
+## 真正重跑采集
 
 ```bash
-python3 -m collegerank crawl --limit 25
+python3 -m collegerank crawl
+# 等价命令
+python3 -m collegerank harvest
 ```
 
-每所机构每次最多采集 25 人，重新运行从上次成功页继续；到末页后下次从头刷新。生成：
+默认对 `config/sources.json` 中**所有配置机构**采集完整返回队列，再采集每个人的教育、职业、奖项、相关日期与引用；不是每校只取 25 人就停止。
 
-| 文件 | 用途 |
+1. 对每组机构提取全部非废弃 P108 任职陈述及起止日期、角色限定符。
+2. 去重人物 ID；使用只读 SPARQL POST 千人批量查询，并保存可恢复的 250 人索引块。
+3. 获取 P69 教育、P512 学位限定符、P106 职业、P166 奖项、P585 获奖时间、P570 去世记录及 P854 来源。
+4. 查询职业与学位的子类关系，区分本科、硕士、博士、教职与研究职业；不凭学校名称猜学位。
+5. 核对机构实体、国家、官网与标签；保留明确标注的博后经历。未知字段保留未知。
+6. 对唯一姓名且学历机构一致的少量人工核验记录合并来源，避免同一人才重复计数。
+7. 校验数据、完整采集报告与至少 100 个有证据的机构，再原子替换发布语料并导出网站。
+
+失败批次不会被标成完成，采集不完整时拒绝发布；重跑复用缓存继续处理。缓存有效期 24 小时，过期后会重新访问来源。最多两个并发请求、请求起始间隔至少 1.25 秒，429 / 5xx 退避并尊重 `Retry-After`；不关闭 TLS、不绕过访问限制。
+
+仅需从已取得的缓存重新分类、发布：
+
+```bash
+python3 -m collegerank harvest --build-only
+```
+
+早期每校限量的候选发现命令已移至 `discover`，用于调试候选，不生成正式榜单：
+
+```bash
+python3 -m collegerank discover --limit 25
+```
+
+## 排名与数据质量
+
+```text
+A[Y,X] = Σ 学历类型权重 / 人才有效任职机构数
+P[Y,X] = A[Y,X] / Σk A[Y,k]
+r = (1-d)/N + d Pᵀr               d = 0.85
+```
+
+默认本科 0.15、硕士 0.25、博士 1.00、博后经历 0.40。博后不是学位。博士层级根据源项及其学位类型关系识别，具体学位实体保存在每条教育记录中。未知学历、荣誉学位不产生培养权重；同人/机构/层级去重；联合任职均分；默认不计自聘。
+
+**只有有效人才关系或有证据的附加贡献涉及的机构参与排名。纯目录、零证据的学校不会靠均匀初始概率补进 Top 100。** 所有机构一起计算，默认只展示前 100，地区筛选不重算全图；学科、角色和权重会重算。
+
+两个任职范围：
+
+- `observed`：默认，使用有来源的教研任职记录，包括历史事件。教研角色来自原始职业分类及其子类关系，不代表每次历史岗位具有同一职级。
+- `current`：只使用 `current: true` 的正面核验记录。无结束日期、仍然在世都不能自动证明当前在职；因此这个子集会比历史网络小很多。
+
+采集记录标记 `source_verified`，意思是结构化源陈述已取得并通过校验，**不是人工逐人核验**。原有人工记录仍标记 `reviewed`。候选、未分类职业不自动变成 faculty。下属学院、院系和历史前身仅在存在唯一 P361 / P749 / P1366 来源链时归入已采集大学；保留 `original_institution` 和映射依据，已采集的独立大学不会因同属一个大学系统被合并。`current`、任职日期、去世记录与原始陈述均可在人物详情查看。
+
+### 奖项与企业
+
+```text
+综合份额 = (1 - α - β) × PageRank
+         + α × normalized(奖项贡献)
+         + β × normalized(当前企业校友贡献)
+默认 α = 0.10，β = 0.05
+```
+
+支持菲尔兹、阿贝尔、沃尔夫数学、诺贝尔、图灵、IEEE Medal of Honor、IEEE Edison Medal。个人奖项按类型与年份去重、按教育权重分给培养机构；缺少年份不补写。数学三大奖的定义是本项目可调整假设。
+
+IEEE Milestone 是技术成就与地点表彰，使用独立的机构事件，不能当作个人奖项或任意归给参与者的母校。见 [IEEE 官方说明](https://history.ieee.org/ieee-milestones-program/)。
+
+企业范围可配置。**企业加分始终只使用确认当前任职**；采到了过去任职或无结束日期的记录，不等于可以把它算作在职员工。未取得有效证据的加分通道自动退回网络，不用猜测数据制造加分。企业官网正面确认的样本仍很小，因此使用可配置的参考人数缩放有效占比：`β_eff = β × min(确认在职人数 / 1000, 1)`；奖项类似按 100 个事件缩放 `α_eff`。这样三个在职案例不会直接占据全世界 5% 的影响力。参考数是公开可调假设，可在参数 JSON 中修改。
+
+原始算法参考 [Brin & Page (1998)](https://research.google/pubs/the-anatomy-of-a-large-scale-hypertextual-web-search-engine/)。本项目是加权扩展，奖项、企业信号不是原始 PageRank 的一部分。单向流动不证明一所学校在所有维度都更好。
+
+## 输出、引用与复现
+
+| 路径 | 内容 |
 | --- | --- |
-| `data/candidates.json` | 待核验人才与机构，不进入已发布榜单 |
-| `data/crawl-state.json` | 每机构分页游标，整页成功才推进 |
-| `data/crawl-report.json` | 本次采集数量、机构完成状态和错误 |
-| `data/cache/` | 公共 API 原始响应，24 小时缓存 |
+| `data/collected.json.gz` | 完整已发布人物、学历、任职、奖项与原始引用 |
+| `data/harvest/collection-report.json` | 每个机构和事实批次的完成状态、失败与时间 |
+| `data/harvest/coverage.json` | 发布/排除人数、学位缺失、有效覆盖与人工合并 |
+| `data/harvest/raw/` | 本地原始响应、SHA-256、请求和分块派生关系；不提交到 Git |
+| `data/harvest/rosters.json` | 实际队列名单的原始陈述；不提交到 Git |
+| `data/harvest/taxonomy.json` | 实际采用的学位与职业分类关系 |
+| `site/data.json(.gz)` | 压缩的浏览器计算输入，不重复加载完整引用 |
+| `site/profiles/*.json.gz` | 按人物分片的完整履历及事实引用 |
+| `site/ranking.json`、`site/ranking.csv` | 本项目重算的排名与贡献指标 |
+| `site/corpus.json.gz` | 可从网站直接下载的全部人物与引用 |
 
-采集 P108（employer）、P69（educated at）、P512（academic degree qualifier）、P166（award received）及原始引用。**P108 没有结束日期不等于当前在职；P69 不等于博士毕业**，这两类情况保留 `null` / `unknown`，等待核验。Wikidata 学位类映射只覆盖常见项目，地方学位与博士后职位需要官方资料补充。候选机构类型同样需核验。
-
-采集仅限公开 Wikidata API，默认请求间隔至少 1.1 秒；429 / 5xx 最多重试 4 次。不能访问时报告错误，不使用旧页面冒充本次更新，不绕过反爬或证书验证。Python.org 安装版 macOS Python 如报证书错误，先运行其安装目录中的 `Install Certificates.command`，或配置可信 CA；不要关闭 TLS 校验。
-
-**真实联网验证限制：** 此开发环境的公共 Wikidata 请求遇到证书/上游访问限制，尚未确认实时采集完整成功。采集解析、失败保护及游标逻辑已有离线测试；上线后需在 GitHub Actions 检查成功报告。定时工作流只有在项目推送到 GitHub 后才会运行。
-
-### 核验候选并加入榜单
-
-1. 找到机构官方人员目录、个人主页/CV、授予学位记录或奖项官网。
-2. 核对姓名、同名消歧、机构实体、学位层级、是否荣誉学位、职位和任职状态。不要把 Wikidata 的所有历史雇主当成当前工作。
-3. 把候选里的 `wd:Q…` 机构映射到 `data/curated.json` 已有 ID；同一个人需要人工消歧后合并，不能新增重复身份。
-4. 将有证据的字段补齐、附上 `sources`，更新 `checked_at` 并标记 `reviewed`，通过数据 PR 提交。
-5. 执行 `validate`、测试和 `export`；`main` 上的 Pages 工作流发布新的榜单。
-
-这是一个证据优先的自动发现 + 审核发布流程。**尚未实现全世界所有 faculty 的官方目录爬取、自动跨语言 CV 解析、自动人员消歧或无人审核的全量排名。** 全球覆盖需要各机构目录适配器与持续的数据维护，不能靠一个通用爬虫保证。详见 [路线图](docs/ROADMAP.md)。
-
-## 数据与复现
+输入全量语料以 gzip 保存；网站使用浏览器标准 `DecompressionStream` 加载压缩数据，完整履历按需加载。原始记录中的 Wikidata 陈述锚点和公开引用地址会保留，不用虚构的人员补数。分块缓存若来自千人批量请求，可通过 `.request.json` 中的 `derived_from` 追溯原始请求。
 
 ```bash
 python3 -m collegerank validate
+python3 -m collegerank export
 python3 -m collegerank rank --config config/example-weights.json
-python3 -m collegerank export --config config/example-weights.json
 python3 -m unittest discover -s tests -v
 node --test tests/*.test.mjs
 ```
 
-`export` 生成 `site/data.json`、`site/ranking.json`、`site/ranking.csv`，同时将数据快照保存为 `data/college-rank.sqlite`。数据 JSON 包含用于重现的 SHA-256。网页初始数据从 JSON 读取，并在浏览器即时重算，所有链接和资源都使用相对路径，适配 GitHub Pages 仓库子路径。
+`data/curated.json` 与 `scripts/create_seed.py` 保留为早期小型测试样本，**不是正式默认数据**；机构目录文件只维护机构实体，不声称产生 faculty 数据。
 
-数据结构与事件示例见 [DATA_MODEL.md](docs/DATA_MODEL.md)。样例数据只使用公开的专业履历，不收集私人联系方式。
+## GitHub 自动更新
 
-## 发布到 GitHub
+- `ci.yml`：数据结构、数学边界、采集失败保护与 Python / JS 一致性检查。
+- `pages.yml`：推送 `main` 时构建并部署已采集语料。
+- `crawl.yml`：每周一 02:30 UTC 或手动完整采集，校验通过后提交新语料并部署；失败时保留采集审计和缓存，不发布半成品。
 
-开源仓库：[CanXINlol/college-rank](https://github.com/CanXINlol/college-rank)，代码采用 MIT License。首次克隆后按上文启动即可。
+仓库 Pages Source 使用 **GitHub Actions**。工作流需要仓库的 contents / pages / id-token 权限；如果仓库策略阻止自动写入，运行会明确失败，旧语料仍保留。上游数据、GitHub 调度与网络可用性会影响自动更新，应查看实际运行报告。
 
-如果发布自己的副本，请在 GitHub 创建空仓库，然后配置自己的远程地址：
+## 仍未完成的原始大目标
 
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/college-rank.git
-git push -u origin main
-```
+此次已跑完配置队列的公开结构化数据，并实际形成有证据的 Top 100；**尚未爬完全世界每一所大学、研究院及其官网的全体当前教授、研究员与 postdoc**。Wikidata 的国别、知名度、年代与职业覆盖不均，很多人没有学位层级或明确当前职位。完整官网名册适配、跨语言 CV 抽取、全球机构遍历、当前企业名册与全部 IEEE Milestone 的机构归属仍需要继续建设，不能把这次采集冒称完成了它们。
 
-在仓库 **Settings → Pages → Source** 选择 **GitHub Actions**。`Publish CollegeRank to GitHub Pages` 工作流将部署网站，地址通常为 `https://YOUR_USERNAME.github.io/college-rank/`。定时采集每周一 02:30 UTC 执行，也可以在 Actions 手动触发；候选结果以 Artifact 下载，不会直接覆盖核验数据。GitHub 可能暂停长期无活动仓库的定时任务，应检查 Actions 状态。
-
-## 目录
-
-```text
-collegerank/      Python 排名、校验、SQLite 快照、采集 CLI
-site/            无依赖前端，原生 JS 排名、图、详情与引用
-data/curated.json 已核验人才数据与 100 所大学节点
-data/institutions.json ROR 核对过的大学主目录
-config/          数据源与权重配置
-tests/           数学边界、采集保护、Python/JS 结果一致性
-scripts/         首批数据重建工具
-docs/            方法、数据模型、路线图、UI 截图
-.github/         自动测试、Pages、定时采集与 PR 模板
-```
-
-代码采用 [MIT License](LICENSE)。本项目整理的事实数据以 [CC0](https://creativecommons.org/publicdomain/zero/1.0/) 提供；引用网页及其文字的权利仍归原权利人。Wikidata 数据依据其 [CC0 数据许可](https://www.wikidata.org/wiki/Wikidata:Licensing)。欢迎有来源的数据 PR 与方法改进。
+代码 [MIT](LICENSE)。Wikidata 结构化数据与 ROR 机构数据按其 CC0 许可使用；外部引用网页权利仍属于原权利人。数据贡献请见 [CONTRIBUTING.md](CONTRIBUTING.md)。
